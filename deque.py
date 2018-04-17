@@ -44,3 +44,16 @@ class Deque:
     def show(self):
         for i in self.deque:
             print(i, end=' ')
+
+"""
+Existe um módulo que permite trabalhar com deque
+"""
+from collections import deque
+
+d = deque()
+d.append(1)
+d.appendleft(0)
+d.append(1)
+d.appendleft(0)
+d.pop()
+d.popleft()
