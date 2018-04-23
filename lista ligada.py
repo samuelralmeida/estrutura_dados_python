@@ -66,6 +66,77 @@ class LinkedList:
 
                         prev_node = current_node
                         current_node = current_node.get_next()
-                        current_node += 1
+                        current_index += 1
 
             self.len_list += 1
+
+    def pop(self, index):
+
+        if not self.empty() and 0 <= index < self.len_list:
+
+            flag_remove = False
+
+            if self.first.get_next() is None:
+                # Possui apenas um elemento
+                self.first = None
+                self.last = None
+                flag_remove = True
+            elif index == 0:
+                # remove do inicio, mas possui mais de 1  elemento
+                self.first = self.first.get_next()
+                flag_remove = True
+            else:
+                # Se chegou aqui a lista possui mais de um elemento e a remoção não é no inicio
+                prev_node = self.first
+                curr_node = self.first.get_next()
+                curr_index = 1
+
+                while curr_node is not None:
+
+                    if index == curr_index:
+                        # o proximo do anterios tem que apontar para o ŕóximo do nó corrente
+                        prev_node.set_next(curr_node.get_next())
+                        curr_node.set_next(None)
+                        flag_remove = True
+                        break
+
+                    prev_node = curr_node
+                    curr_node = curr_node.get_next()
+                    curr_index += 1
+
+            if flag_remove:
+                self.len_list -= 1
+
+    def empty(self):
+        if self.first is None:
+            return True
+        return False
+
+    def length(self):
+        return self.len_list
+
+    def show(self):
+
+        curr_node = self.first
+
+        while curr_node is not None:
+            print(curr_node.get_label(), end=' ')
+            curr_node = curr_node.get_next()
+        print('')
+
+
+lista = LinkedList()
+
+lista.push('samu', 0)
+lista.show()
+lista.push('rod', 1)
+lista.show()
+lista.push('alme', 0)
+lista.show()
+lista.push('sou', 2)
+lista.show()
+
+lista.pop(0)
+lista.show()
+lista.pop(2)
+lista.show()
