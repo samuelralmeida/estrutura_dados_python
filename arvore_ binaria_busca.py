@@ -86,6 +86,73 @@ class BinarySearchTree:
     def getRoot(self):
         return self.root
 
+    def remove(self, label):
+        """
+        CASO 1 - nó removido não tem filho (chamado de folha também), o nó é retirado
+        CASO 2 - nó removido tem apenas 1 filho, esse filho ocupa o lugar do nó removido
+        CASO 3 - nó removido com 2 filhos, pega o menor elemento da subarvore a direita e substitui o removido
+        """
+
+        dad_node = None
+        curr_node = self.root
+
+        while curr_node != None:
+
+            # verifica se encontrou o nó a ser removido
+            if label == curr_node.getLabel():
+
+                # caso 1
+                if curr_node.getLeft() == None and curr_node.getRight() == None:
+
+                    # verifica se é a raiz
+                    if dad_node == None:
+                        self.root = None
+                    else:
+                        # verifica se é filho a esquerda ou direita
+                        if dad_node.getLeft() == curr_node:
+                            # filho a esquerda
+                            dad_node.setLeft(None)
+                        elif dad_node.getRight() == curr_node:
+                            # filho a direita
+                            dad_node.setRigth(None)
+
+                # caso 2
+                elif (curr_node.getLeft() is None and curr_node.getRight() is not None) or \
+                     (curr_node.getLeft() is not None and curr_node.getRight() is None):
+
+                    # verifica se o nó a ser removido é raiz
+                    if dad_node == None:
+                        # verifica se o filho de curr_node é filho a esquerda
+                        if curr_node.getLeft() != None:
+                            self.root = curr_node.getLeft()
+                        else:
+                            # filho é a direita
+                            self.root = curr_node.getRight()
+                    # se não for raiz
+                    else:
+                        # verifica se o filho de curr_node é filho à esquerda
+                        if curr_node.getLeft() != None:
+                            # verifica se curr_node é filho a esquerda
+                            if dad_node.getLeft() and dad_node.getLeft().getLabel() == curr_node.getLabel():
+                                dad_node.setLeft(curr_node.getLeft())
+                            else:
+                                # curr_node é filho a direita
+                                dad_node.setRight(curr_node.getLeft())
+                        else:
+                            # filho de curr_node é filho à esquerda
+                            # verifica se curr_node é filho a esquerda
+                            if dad_node.getLeft() and dad_node.getLeft().getLabel() == curr_node.getLabel():
+                                dad_node.setLeft(curr_node.getRight())
+                            else:
+                                # curr_node é filho a direita
+                                dad_node.setRight(curr_node.Right())
+
+                # caso 3
+
+
+
+
+
 
 t = BinarySearchTree()
 t.insert(8)
